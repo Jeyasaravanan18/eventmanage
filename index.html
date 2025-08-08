@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Participation</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    input, select, button {
+      margin: 10px 0;
+      padding: 8px;
+      width: 250px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📋 Event Participation Form</h1>
+
+  <input type="text" id="roll" placeholder="Roll Number"><br>
+  <input type="text" id="name" placeholder="Participant Name"><br>
+  <input type="text" id="dept" placeholder="Department"><br>
+
+  <select id="event">
+    <option value="">Select Event</option>
+    <option>Code Hackathon</option>
+    <option>Tech Quiz</option>
+    <option>UI Design</option>
+    <option>Debugging Challenge</option>
+    <option>Startup Pitch</option>
+  </select><br>
+
+  <button onclick="joinEvent()">Join</button>
+
+  <h2>📝 Participants List</h2>
+
+  <table id="participantTable">
+    <thead>
+      <tr>
+        <th>Roll Number</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Event</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Added participants will appear here -->
+    </tbody>
+  </table>
+
+  <script>
+    const registered = {};
+
+    function joinEvent() {
+      const roll = document.getElementById("roll").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const dept = document.getElementById("dept").value.trim();
+      const event = document.getElementById("event").value;
+
+      if (roll && name && dept && event) {
+        if (registered[roll]) {
+          alert("This roll number has already joined an event.");
+          return;
+        }
+
+        registered[roll] = event;
+
+        const table = document.getElementById("participantTable").getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow();
+
+        newRow.insertCell(0).innerText = roll;
+        newRow.insertCell(1).innerText = name;
+        newRow.insertCell(2).innerText = dept;
+        newRow.insertCell(3).innerText = event;
+
+        // Clear form
+        document.getElementById("roll").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("dept").value = "";
+        document.getElementById("event").value = "";
+
+      } else {
+        alert("Please fill all fields.");
+      }
+    }
+  </script>
+
+</body>
+</html>
